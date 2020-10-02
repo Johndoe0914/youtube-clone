@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import RecommendedVideos from "./RecommendedVideos";
+import VideoPage from "./VideoPage";
+import VideoPageSidebar from "./VideoPageSidebar";
 import SearchPage from "./SearchPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -13,6 +15,12 @@ const App = () => {
       <Router>
         <Header />
         <Switch>
+          <Route path='/video/:videoId'>
+            <div className='app__page'>
+              <VideoPage />
+              <VideoPageSidebar />
+            </div>
+          </Route>
           <Route path='/search/:searchTerm'>
             <div className='app__page'>
               <Sidebar />

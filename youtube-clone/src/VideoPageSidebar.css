@@ -1,0 +1,16 @@
+.VideoPageSidebar {
+  flex: 0.2;
+  margin-top: 175px;
+  padding-right: 150px;
+}
+
+.VideoPageSidebar__Row {
+  display: flex;
+}
+.VideoPageSidebar__Row > p {
+  padding-left: 20px;
+}
+.VideoPageSidebar_image {
+  height: 100px;
+  width: 150px;
+}
