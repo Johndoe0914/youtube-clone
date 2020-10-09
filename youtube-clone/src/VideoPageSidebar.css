@@ -1,7 +1,16 @@
 .VideoPageSidebar {
   flex: 0.2;
-  margin-top: 175px;
   padding-right: 150px;
+  height: 400px;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: center;
+}
+.VideoPageSidebar > img {
+  width: 400px;
+  height: 80px;
+  object-fit: contain;
+  box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3);
 }
 
 .VideoPageSidebar__Row {

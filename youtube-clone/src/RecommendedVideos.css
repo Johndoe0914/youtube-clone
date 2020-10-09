@@ -13,4 +13,5 @@
 .recommendedVideos__videos {
   display: flex;
   flex-wrap: wrap;
+  outline: none;
 }
