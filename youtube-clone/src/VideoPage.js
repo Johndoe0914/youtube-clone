@@ -7,23 +7,22 @@ import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ShareIcon from '@material-ui/icons/Share';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import {db} from './firebase';
 
 import Comments from "./VideoPageComments";
 
 import "./VideoPage.css";
 
+
+
 const VideoPage = ({ match }) => {
   const [showMore, setShowMore] = useState(false);
-  const [youtubeVideo, setYoutubeVideo] = useState({
-    profileName: "",
-    profileVideoUrl: "",
-    profileVideoId: "",
-  });
+  const [youtubeVideo, setYoutubeVideo] = useState([]);
   const [videos, setVideos] = useState([
     {
       name: "lil uzi vert",
       videoUrl: "https://www.youtube.com/watch?v=hihYATpt9oo",
-      videoId: "1",
+      videoId: "8n3y8T9uWtxz2xcSOulj",
     },
     {
       name: "Dan Robinson",
@@ -31,45 +30,35 @@ const VideoPage = ({ match }) => {
       videoId: "2",
     },
   ]);
-
-  useEffect(() => {
-    const url = window.location.pathname;
+  const url = window.location.pathname;
 
     var urlId = url.substring(url.lastIndexOf("/") + 1);
-    console.log(urlId);
+  
+  
+  const getVideo = async() => {
+ 
 
-    // const output = videos.filter((video) => {
-    //   const info = video.videoId === urlId;
+}
 
-    //   return info;
-    // });
 
-    const filterVideo = (videoid) => {
-      let info = videos.filter((video) => {
-        return video.videoId === videoid;
-      });
+  useEffect(() => {
+    db.collection('videos').doc(urlId).onSnapshot(snapshot => {
+      console.log(snapshot.data())
+   setYoutubeVideo(snapshot.data())
 
-      setYoutubeVideo({
-        profileName: info[0].name,
-        profileVideoUrl: info[0].videoUrl,
-        profileVideoId: info[0].videoId,
-      });
-      console.log("info", info);
+    })
+   
+
+     
+   
+    
+
+    
+    
+
+    return () => {
+     
     };
-
-    filterVideo(urlId);
-
-    console.log("vidoe id ->");
-
-    // setYoutubeVideo({
-    //   profileName: output[0].name,
-    //   profileVideoUrl: output[0].videoUrl,
-    //   profileVideoId: output[0].videoId,
-    // });
-
-    console.log("yuoutube video =>", youtubeVideo);
-
-    return () => {};
   }, []);
 
   const desc =
@@ -83,10 +72,10 @@ const VideoPage = ({ match }) => {
           width=''
           height=''
           controls
-          url='https://www.youtube.com/watch?v=hihYATpt9oo'
+          url={youtubeVideo.videoUrl}
         />
         <div className='videoPage__PlayerInfo'>
-          <h3> My Random Duo was Cheating in Warzone...</h3>
+  <h3> My Random Duo was Cheating in Warzone...{youtubeVideo.videoUrl}</h3>
           <br />
           <small> 748,493 views • Aug 29, 2020</small>
 
@@ -127,9 +116,9 @@ const VideoPage = ({ match }) => {
           className='videoPage__ShowMore'
         >
           <ExpandMoreOutlinedIcon />
-          <small>Show More</small>
+        <small>{showMore ? 'Show Less': 'Show More'}</small>
         </span>
-        <Comments />
+        <Comments comments={youtubeVideo.videoComments}/>
       </div>
     </div>
   );
