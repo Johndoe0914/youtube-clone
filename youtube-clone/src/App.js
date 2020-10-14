@@ -12,9 +12,12 @@ import "./App.css";
 const App = () => {
   return (
     <div className='app'>
+        
       <Router>
         <Header />
+      
         <Switch>
+
           <Route path='/video/:videoId'>
             <div className='app__page'>
               <VideoPage />
@@ -34,6 +37,7 @@ const App = () => {
             </div>
           </Route>
         </Switch>
+        
       </Router>
     </div>
   );
