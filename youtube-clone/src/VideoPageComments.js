@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
+import firebase from 'firebase-admin';
 import "./VideoPageComments.css";
+import {firestore} from 'firebase-admin'
 import { Avatar } from "@material-ui/core";
-import admin from 'firebase-admin';
+
+
 import {db } from './firebase';
 
 const Comments = ({comments, dbID}) => {
   const [focus, setFocus] = useState(false);
   const [input, setInput] = useState("");
-
-  
 
 
  
@@ -61,7 +62,7 @@ const Comments = ({comments, dbID}) => {
 
   //   useEffect(() => {}, [comments]);
 
-  const AddComment = (e) => {
+  const AddComment = async(e) => {
     e.preventDefault();
     const newComment = {
       avatarUrl:
@@ -73,8 +74,8 @@ const Comments = ({comments, dbID}) => {
    console.log(newComment)
 
 
-   return db.collection('videos').doc(dbID).update({
-     videoComments: admin.firestore.FieldValue.arrayUnion(newComment)
+   return await db.collection('videos').doc(dbID).update({
+     videoComments: firestore.FieldValue.arrayUnion(newComment)
    })
   };
 
