@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {useDispatch} from 'react-redux';
+import  { login } from '../features/userSlice';
 import './Login.css';
 
 
 
 const Login = () => {
 
-    const [login, setlogin ] = useState(false);
+
+    const dispatch = useDispatch()
+    const [userLogin, setUserLogin ] = useState(true);
     
     const [userDetails,setUserDetails] = useState({
         name: '',
@@ -25,21 +28,43 @@ const Login = () => {
         console.log('response here',res)
         if(res.status === 200) {
             localStorage.setItem('token', JSON.stringify(res.data.token))
+            //dispatch user to redux
+            dispatch(login({
+                id: res.data.id,
+                displayName: userDetails.name,
+                email: userDetails.email,
+                profilePic: userDetails.profilePic
+            }))
         }
     }catch(e){
-        alert('something went wrong try a different email')
+        alert('something went wrong try again')
       }
        
         
     }
 
+    const isAuthenticated = () => {
+        return {}
+    }
+
     const loginToApp = async  (e) => {
         e.preventDefault()
-        const res = await axios.post('http://localhost:5000/api/auth', (userDetails.email, userDetails.password))
-       console.log(res)
-        if(res.status(200)) {
-            localStorage.setItem('token', )
-        }
+   try{
+    const res = await axios.post('http://localhost:5000/api/auth', (userDetails.email, userDetails.password))
+    console.log(res)
+     if(res.status === 200) {
+         localStorage.setItem('token', JSON.stringify(res.data.token) )
+         //dispatch User to Redux
+         dispatch(login({
+            id: res.data.id,
+            displayName: userDetails.name,
+            email: userDetails.email,
+            profilePic: userDetails.profilePic
+        }))
+     }
+   }catch(e) {
+    alert('Username or Password is incorrect')
+   }
 
     }
     const handleChange = name => event => {
@@ -58,9 +83,10 @@ const Login = () => {
             <input value={userDetails.email}  onChange={ handleChange('email')} type='text' placeholder='Email'/>
             <input value={userDetails.password} onChange={ handleChange('password')}type='password' placeholder='Password' />
             <input value={userDetails.password2} onChange={ handleChange('password2')}type='password' placeholder='Retype Password' />
-                <p >{login ? 'Login here' : 'Register here'}</p>
-                {login ? <button type='submit' onClick={loginToApp}> Login</button>: <button type='submit' onClick={signUpToApp} >Sign up </button>}
+                <p onClick={userLogin ? (e) => setUserLogin(false) : (e) => setUserLogin(true)} >{userLogin ? (<small>Click here to sign up</small>) : (<small>Click here to login</small>)}</p>
+                {userLogin ? <button type='submit' onClick={loginToApp}> Login</button>: <button type='submit' onClick={signUpToApp} >Sign up </button>}
                    
+
                </form>
                
            </div>

@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
+    channelId: {
+        type: Number
+    },
     name: {
         type: String,
     },
@@ -20,12 +23,16 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    favoriteCoins: [
+    videos: [
         {
-            type: String,
+            type: Array,
             
         }
-    ]
+    ],
+    description: {
+        type: String
+    }
+
 })
 
 module.exports = User = mongoose.model('user', UserSchema);
