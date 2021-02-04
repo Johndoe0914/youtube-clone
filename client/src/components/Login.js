@@ -1,13 +1,19 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import  { login } from '../features/userSlice';
+import {isAuthenticated, selectUser} from '../features/userSlice';
+import {Redirect} from 'react-router-dom';
+
+
 import './Login.css';
 
 
 
 const Login = () => {
 
+    const user = useSelector(selectUser);
+    const isAuth = useSelector(isAuthenticated);
 
     const dispatch = useDispatch()
     const [userLogin, setUserLogin ] = useState(true);
@@ -18,8 +24,15 @@ const Login = () => {
         password: '',
         password2: '',
         profilePic: '',
+        redirect: false
 
     })
+const renderRedirect = () => {
+    if(isAuth) {
+  window.location.assign(`/settings/${user.id}`)
+}
+}
+    
 
     const signUpToApp = async (e) => {
         e.preventDefault()
@@ -33,18 +46,18 @@ const Login = () => {
                 id: res.data.id,
                 displayName: userDetails.name,
                 email: userDetails.email,
-                profilePic: userDetails.profilePic
+                profilePic: userDetails.profilePic,
             }))
+
+            
+          
+            //check against isAuth and redirect user to Private settings page
         }
     }catch(e){
         alert('something went wrong try again')
       }
        
         
-    }
-
-    const isAuthenticated = () => {
-        return {}
     }
 
     const loginToApp = async  (e) => {
@@ -61,6 +74,10 @@ const Login = () => {
             email: userDetails.email,
             profilePic: userDetails.profilePic
         }))
+        userDetails.redirect = true
+        if(userDetails.redirect && userLogin) {
+            return <Redirect to={`/channel/${res.data.id}`} />
+        }
      }
    }catch(e) {
     alert('Username or Password is incorrect')
@@ -76,7 +93,7 @@ const Login = () => {
     return (
         <div className='login'>
            <div className='login__form'>
-               
+               {renderRedirect()}
                <form>
             <input value={userDetails.name} onChange={handleChange('name')} type='text' placeholder='Full name required if registering'/>
             <input value={userDetails.profilePic} onChange={ handleChange('profilePic')} type='text' placeholder='Profile pic URL (optional)'/>

@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import RecommendedVideos from "./RecommendedVideos";
 import SearchPage from "./SearchPage";
 import Login from './components/Login'
+import Settings from './components/Settings';
 import VideoPage from './VideoPage';
 import VideoPageSidebar from './VideoPageSidebar';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -16,6 +17,11 @@ const App = () => {
       <Router>
         <Header />
         <Switch>
+        <Route path='/settings/:id'>
+            <div className='settings__page'>
+              <Settings />
+            </div>
+          </Route>
         <Route path='/login'>
             <div className='login__page'>
               <Login />
