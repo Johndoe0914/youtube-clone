@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import  { login } from '../features/userSlice';
 import {isAuthenticated, selectUser} from '../features/userSlice';
-import {Redirect} from 'react-router-dom';
+
 
 
 import './Login.css';
@@ -20,14 +20,17 @@ const Login = () => {
     
     const [userDetails,setUserDetails] = useState({
         name: '',
-        email: '',
-        password: '',
+        email: 'qwerty12345@mail.com',
+        password: 'qwerty',
         password2: '',
         profilePic: '',
         redirect: false
 
     })
 const renderRedirect = () => {
+    if(userLogin == false && isAuth == true) {
+        window.location.assign(`/channel/${user.id}`)
+    }
     if(isAuth) {
   window.location.assign(`/settings/${user.id}`)
 }
@@ -37,7 +40,7 @@ const renderRedirect = () => {
     const signUpToApp = async (e) => {
         e.preventDefault()
       try{
-        const res = await axios.post('http://localhost:5000/api/users', userDetails)
+        const res = await axios.post('/api/users', userDetails)
         console.log('response here',res)
         if(res.status === 200) {
             localStorage.setItem('token', JSON.stringify(res.data.token))
@@ -50,8 +53,6 @@ const renderRedirect = () => {
             }))
 
             
-          
-            //check against isAuth and redirect user to Private settings page
         }
     }catch(e){
         alert('something went wrong try again')
@@ -60,10 +61,11 @@ const renderRedirect = () => {
         
     }
 
-    const loginToApp = async  (e) => {
+    const loginToApp = async (e) => {
         e.preventDefault()
    try{
-    const res = await axios.post('http://localhost:5000/api/auth', (userDetails.email, userDetails.password))
+         console.log(userDetails.email, userDetails.password)
+    const res = await axios.post('/api/auth',  {email: userDetails.email, password: userDetails.password})
     console.log(res)
      if(res.status === 200) {
          localStorage.setItem('token', JSON.stringify(res.data.token) )
@@ -74,13 +76,10 @@ const renderRedirect = () => {
             email: userDetails.email,
             profilePic: userDetails.profilePic
         }))
-        userDetails.redirect = true
-        if(userDetails.redirect && userLogin) {
-            return <Redirect to={`/channel/${res.data.id}`} />
-        }
+
      }
    }catch(e) {
-    alert('Username or Password is incorrect')
+    alert('Username or password are incorrect')
    }
 
     }

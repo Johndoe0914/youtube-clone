@@ -40,3 +40,7 @@
 .header__icon {
   margin-right: 8px;
 }
+
+.header__iconDropDown {
+  list-style: none;
+}

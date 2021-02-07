@@ -1,0 +1,35 @@
+
+
+
+.settings__channeldescription{
+    display: grid;
+    place-items: center;
+    margin-top: 60px;
+
+}
+.settings__channeldescription > form > textarea {
+    height: 100px;
+    width: 500px;
+    font-size: 15px;
+   
+    padding: 5px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        
+    outline: none;
+    border: none;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+.settings__channeldescription > form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    
+}
+.settings__channeldescription > form > button {
+    height: 35px;
+    margin-top: 30px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}

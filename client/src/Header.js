@@ -6,11 +6,21 @@ import AppsIcon from "@material-ui/icons/Apps";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
+import {isAuthenticated, selectUser, logout} from './features/userSlice';
+import {useDispatch, useSelector} from 'react-redux';
 import "./Header.css";
 
 const Header = () => {
   const [inputSearch, setInputSearch] = useState("");
+  const user = useSelector(selectUser);
+  const isAuth = useSelector(isAuthenticated);
+  const dispatch = useDispatch();
 
+
+  const logOutApp = () => {
+    dispatch(logout());
+    localStorage.removeItem('token')
+  }
   return (
     <div className='header'>
       <div className='header__left'>
@@ -38,7 +48,11 @@ const Header = () => {
         <AppsIcon className='header__icon' />
         <NotificationsIcon className='header__icon' />
         <Link to='/login' >
-        <Avatar src='' />
+       
+        <ul  className='header__iconDropDown'>
+          <li> <Avatar src='' /></li>
+       {isAuth ? <li onClick={logOutApp}>Logout</li> : ''}
+        </ul>
         </Link>
       </div>
     </div>
