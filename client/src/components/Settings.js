@@ -8,7 +8,8 @@ import './Settings.css';
 const Settings = () => {
     const isAuth = useSelector(isAuthenticated);
     const user = useSelector(selectUser);
-const [channelInfo, setChannelInfo] = useState({
+   const [channelInfo, setChannelInfo] = useState({
+    userID: user.id,
     channelDescription: "",
     channelCategory: ''
 });
@@ -24,7 +25,7 @@ const handleSubmit = async (e) => {
     e.preventDefault()
 
     try{
-        const res = await axios.post(`/api/user/channel/${user.id}`, channelInfo)
+        const res = await axios.put(`/api/user/channel/${user.id}`, channelInfo)
         console.log('The response',res)
     }catch(e){
         console.log(e)

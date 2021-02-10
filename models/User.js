@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-    channelId: {
-        type: Number
-    },
     name: {
         type: String,
     },
@@ -19,19 +16,23 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String
     },
+    description: {
+        type: String
+    },
+    category: {
+        type: String
+    },
     date: {
         type: Date,
         default: Date.now
     },
+
     videos: [
         {
             type: Array,
             
         }
     ],
-    description: {
-        type: String
-    }
 
 })
 

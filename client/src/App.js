@@ -4,9 +4,11 @@ import Sidebar from "./Sidebar";
 import RecommendedVideos from "./RecommendedVideos";
 import SearchPage from "./SearchPage";
 import Login from './components/Login'
+import Channel from './components/Channel';
 import Settings from './components/Settings';
 import VideoPage from './VideoPage';
 import VideoPageSidebar from './VideoPageSidebar';
+import PrivateRoute from './components/PrivateRoute';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
@@ -17,11 +19,17 @@ const App = () => {
       <Router>
         <Header />
         <Switch>
-        <Route path='/settings/:id'>
+        <Route path='/channel/:id'>
+            <div className='channel__page'>
+            <Sidebar />
+              <Channel />
+            </div>
+          </Route>
+        <PrivateRoute path='/settings/:id' exact component>
             <div className='settings__page'>
               <Settings />
             </div>
-          </Route>
+          </PrivateRoute>
         <Route path='/login'>
             <div className='login__page'>
               <Login />

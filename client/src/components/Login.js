@@ -28,10 +28,9 @@ const Login = () => {
 
     })
 const renderRedirect = () => {
-    if(userLogin == false && isAuth == true) {
+    if(userLogin === true && isAuth === true) {
         window.location.assign(`/channel/${user.id}`)
-    }
-    if(isAuth) {
+    }else if(isAuth) {
   window.location.assign(`/settings/${user.id}`)
 }
 }
@@ -40,7 +39,7 @@ const renderRedirect = () => {
     const signUpToApp = async (e) => {
         e.preventDefault()
       try{
-        const res = await axios.post('/api/users', userDetails)
+        const res = await axios.post('/api/signup', userDetails)
         console.log('response here',res)
         if(res.status === 200) {
             localStorage.setItem('token', JSON.stringify(res.data.token))
@@ -65,7 +64,7 @@ const renderRedirect = () => {
         e.preventDefault()
    try{
          console.log(userDetails.email, userDetails.password)
-    const res = await axios.post('/api/auth',  {email: userDetails.email, password: userDetails.password})
+    const res = await axios.post('/api/signin',  {email: userDetails.email, password: userDetails.password})
     console.log(res)
      if(res.status === 200) {
          localStorage.setItem('token', JSON.stringify(res.data.token) )

@@ -1,0 +1,70 @@
+.channel {
+flex: 0.8;
+
+}
+
+.channel__jumbotron{
+
+}
+
+.channel__jumbotron > img {
+    width: 99.9%;
+    height: 325px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+   
+}
+.channel__Info {
+    display: flex;
+    margin-left: 100px;
+    margin-top: 50px;
+    
+}
+.channel__Info > Avatar {
+    width: 50px;
+    height: 50px;
+}
+
+.channel__InfoAttb {
+    padding-left: 25px;
+}
+
+.channel__InfoSub  {
+ margin-right: 1000px;
+}
+
+.channel__Info > button {
+    margin-left: 50%;
+    height: 30px;
+    background-color: red;
+    color: white;
+    outline: none;
+}
+
+.channel__tabs > ul {
+    list-style: none;
+    display: flex;
+    margin-left: 4%;
+    margin-top: 20px;
+    
+}
+
+.channel__tabs > ul > li {
+padding-right: 70px;
+font-weight: bold;
+color: grey;
+}
+.channel__tabsInfo {
+    display: grid;
+    place-items: center;
+}
+
+.channel__tab {
+
+}
+.channel__tabs > ul > li:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
